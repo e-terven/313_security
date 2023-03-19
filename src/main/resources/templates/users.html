@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Users</title>
+</head>
+<h1> Table Users </h1>
+<style>
+  table {
+    margin: 10% auto;
+    width: 40%;
+  }
+  table, th, td {
+    border: 1px solid;
+    width: 30%;
+    border-collapse: collapse;
+    text-align: center;
+  }
+  tr:hover td {
+    background-color: #51b651;
+  }
+  td {
+    background-color: lightgreen;
+  }
+  th {
+    background-color: darkseagreen;
+  }
+</style>
+
+<body>
+<table>
+  <tr>
+    <th>ID</th>
+    <th>FirstName</th>
+    <th>LastName</th>
+    <th>Age</th>
+  </tr>
+  <tr th:each="user : ${users}">
+
+    <td>
+      <a th:href="@{/{id}(id=${user.getId()})}" th:text="${user.getId()}">
+        <span th:text="${user.getId()}"></span>
+      </a>
+    </td>
+    <td th:text="${user.getFirstName()}"></td>
+    <td th:text="${user.getLastName()}"></td>
+    <td th:text="${user.getAge()}"></td>
+  </tr>
+</table>
+<a href="/crud/new">Add User</a>
+</body>
+</html>

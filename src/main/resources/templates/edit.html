@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit User</title>
+</head>
+<body>
+<h1> Edit User: </h1>
+<form method="POST" th:method="PATCH" th:action="@{/users}" th:object="${user}">
+  <input type="hidden" th:field="*{id}"/>
+  <br/>
+  <label for="name">Name: </label>
+  <input th:field="*{firstName}" type="text" id="name" required><br><br>
+  <br/>
+  <label for="last_name">Last Name: </label>
+  <input th:field="*{lastName}" type="text" id="last_name" required><br><br>
+  <br/>
+  <label for="age">Age: </label>
+  <input th:field="*{age}" type="text" id="age" required><br><br>
+  <br/>
+  <input type="submit" value="Update">
+  <br/>
+</form>
+<form method="POST" th:action="@{/users/{id}(id=${user.id})}" th:object="${user}">
+  <input type="hidden" th:field="*{id}"/>
+  <input type="submit" value="Delete">
+</form>
+</body>
+</html>

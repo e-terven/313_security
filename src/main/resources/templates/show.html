@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>UserById</title>
+</head>
+<body>
+<p th:text="${'Id: ' + user.getId()}">VALUE</p>
+<p th:text="${'FirstName: ' + user.getFirstName()}">VALUE</p>
+<p th:text="${'LastName: ' + user.getLastName()}">VALUE</p>
+<p th:text="${'Age: ' + user.getAge()}">VALUE</p>
+<br/>
+
+<a href="/crud/users">Show all users</a>
+<br/>
+<a th:href="@{/{id}/edit(id=${user.getId()})}">Edit</a>
+<br/>
+<form method="POST" th:action="@{/users/{id}(id=${user.id})}" th:object="${user}">
+  <input type="hidden" th:field="*{id}"/>
+  <input type="submit" value="Delete">
+</form>
+</body>
+</html>
