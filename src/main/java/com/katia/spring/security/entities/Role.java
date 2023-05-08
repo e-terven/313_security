@@ -1,12 +1,18 @@
 package com.katia.spring.security.entities;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity(name = "roles")
+@NoArgsConstructor
+@Setter
+@Getter
 public class Role implements GrantedAuthority {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -14,45 +20,13 @@ public class Role implements GrantedAuthority {
     @Column(name = "role_name")
     private String roleName;
 
-//    @Transient
-//    @ManyToMany(mappedBy = "username")
-//    Set<User> users;
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(
-            name = "users_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();
+    @ManyToMany(mappedBy = "roles")
+    private Set<User> roles;
 
-    public Role() {}
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
+    public Role(Long id, String roleName, Set<User> roles) {
         this.id = id;
-    }
-
-    public String getRoleName() {
-        return roleName;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
+        this.roleName = roleName;
         this.roles = roles;
-    }
-
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
-
-    public Role(Long id, String roleName) {
-        this.id = id;
-        this.roleName = roleName;
     }
 
     @Override

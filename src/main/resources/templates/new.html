@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <meta charset="UTF-8">
-<title>Add user</title>
+<title>Add User</title>
 <body>
 <h1> Add User: </h1>
-<form th:method="POST" th:action="@{/users}">
-    <label for="firstName">Name: </label>
+<div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+    <p th:text="${errorMessage}"></p>
+</div>
+<form th:method="POST" th:action="@{/admin/users}">
+    <label for="email">Email: </label>
+    <input type="text" id="email" name="email" required><br><br>
+    <br/>
+    <label for="firstName">First Name: </label>
     <input type="text" id="firstName" name="firstName" required><br><br>
     <br/>
     <label for="lastName">Last Name: </label>
@@ -14,7 +20,25 @@
     <label for="age">Age: </label>
     <input type="text" id="age" name="age" required><br><br>
     <br/>
+    <label for="password">Password: </label>
+    <input type="password" id="password" name="password" required><br><br>
+    <br/>
+    <div>
+        <label>Roles:</label>
+        <br/>
+        <div>
+            <input type="checkbox" id="roleUser" name="roleNames" value="ROLE_USER" checked>
+            <label>USER</label>
+        </div>
+        <div>
+            <input type="checkbox" id="roleAdmin" name="roleNames" value="ROLE_ADMIN">
+            <label>ADMIN</label>
+        </div>
+    </div>
+    <br>
     <input type="submit" value="Add User">
+    <br>
+    <p> <a href="/security/logout">Logout</a></p>
 </form>
 </body>
 </html>

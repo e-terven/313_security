@@ -4,13 +4,28 @@
   <meta charset="UTF-8">
   <title>Edit User</title>
 </head>
+
 <body>
 <h1> Edit User: </h1>
-<form method="POST" th:method="PATCH" th:action="@{/users}" th:object="${user}">
-  <input type="hidden" th:field="*{id}"/>
+
+<div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}">
+<p th:text="${errorMessage}"></p>
+</div>
+
+<form method="POST"
+      th:action="@{'/admin/edit/{id}'(id=${userUpdateDto.id})}"
+      th:object="${userUpdateDto}">
+  <input type="hidden" name="_method" value="PATCH" />
+  <input type="hidden" name="_method" value="PATCH" />
   <br/>
-  <label for="name">Name: </label>
-  <input th:field="*{firstName}" type="text" id="name" required><br><br>
+  <label for="id">Id: </label>
+  <input th:field="*{id}" type="number" id="id" readonly="readonly" required><br><br>
+  <br/>
+  <label for="email">Email: </label>
+  <input th:field="*{email}" type="text" id="email" required><br><br>
+  <br/>
+  <label for="first_name">First Name: </label>
+  <input th:field="*{firstName}" type="text" id="first_name" required><br><br>
   <br/>
   <label for="last_name">Last Name: </label>
   <input th:field="*{lastName}" type="text" id="last_name" required><br><br>
@@ -18,12 +33,35 @@
   <label for="age">Age: </label>
   <input th:field="*{age}" type="text" id="age" required><br><br>
   <br/>
+  <label for="password">Password: </label>
+  <input th:field="*{password}" type="text" id="password" required><br><br>
+  <br/>
+
+  <div>
+    <label>Roles:</label>
+    <br/>
+    <div>
+      <input type="checkbox" id="roleUser" name="roleNames" value="ROLE_USER" checked
+             th:checked="${userUpdateDto.roles.contains('ROLE_USER')}">
+      <label>USER</label>
+    </div>
+    <div>
+      <input type="checkbox" id="roleAdmin" name="roleNames" value="ROLE_ADMIN"
+             th:checked="${userUpdateDto.roles.contains('ROLE_ADMIN')}">
+      <label>ADMIN</label>
+    </div>
+  </div>
+  <br>
   <input type="submit" value="Update">
+  <input type="hidden" name="newEmail" value="${userUpdateDto.newEmail}" />
   <br/>
 </form>
-<form method="POST" th:action="@{/users/{id}(id=${user.id})}" th:object="${user}">
+
+<form method="POST" th:action="@{'/admin/users/{id}'(id=${userUpdateDto.id})}" th:object="${userUpdateDto}">
   <input type="hidden" th:field="*{id}"/>
   <input type="submit" value="Delete">
+</form>
+  <p> <a href="/security/logout">Logout</a></p>
 </form>
 </body>
 </html>

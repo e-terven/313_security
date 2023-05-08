@@ -1,55 +1,55 @@
 package com.katia.spring.security.entities;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
+import java.util.*;
+
 
 @Entity
+@NoArgsConstructor
+@Setter
+@Getter
 @Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column (name = "first_name")
+    @Column(name = "first_name")
     private String firstName;
-    @Column (name = "last_name")
+    @Column(name = "last_name")
     private String lastName;
-    @Column (name = "age")
+    @Column(name = "age")
     private String age;
-    @Column (name = "username")
-    private String username;
-    @Column (name = "password")
+    @Column(name = "email")
+    private String email;
+    @Column(name = "password")
     private String password;
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
 
-    public User() {}
-    public User(String firstName, String lastName, String age, String username, String password) {
+    private Set<Role> roles;
+
+    public User(String firstName, String lastName, String age, String email, String password, List<Role> roles) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
-        this.username = username;
+        this.email = email;
         this.password = password;
+        this.roles = new HashSet<>(roles);
     }
 
-    public String getUsername() {
-        return username;
+    public Set<Role> getRoles() {
+        return this.roles;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    public Long getId() {return id;}
-    public void setId(Long id) {this.id = id;}
-    public String getFirstName() {return firstName;}
-    public void setFirstName(String firstName) {this.firstName = firstName;}
-    public String getLastName() {return lastName;}
-    public void setLastName(String lastName) {this.lastName = lastName;}
-    public String getAge() {return age;}
-    public void setAge(String age) {this.age = age;}
 }
 

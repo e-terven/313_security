@@ -12,6 +12,6 @@ spring:
           use_jdbc_metadata_defaults: false
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/pp_312
+    url: jdbc:mysql://localhost:3306/313
     username: root
     password: mysql33!

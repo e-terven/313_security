@@ -31,6 +31,7 @@
 <table>
   <tr>
     <th>ID</th>
+    <th>Email</th>
     <th>FirstName</th>
     <th>LastName</th>
     <th>Age</th>
@@ -38,15 +39,20 @@
   <tr th:each="user : ${users}">
 
     <td>
-      <a th:href="@{/{id}(id=${user.getId()})}" th:text="${user.getId()}">
+      <a th:href="@{'/admin/{id}/edit'(id=${user.id})}"
+         th:text="${user.getId()}">
         <span th:text="${user.getId()}"></span>
       </a>
     </td>
+
+    <td th:text="${user.getEmail()}"></td>
     <td th:text="${user.getFirstName()}"></td>
     <td th:text="${user.getLastName()}"></td>
     <td th:text="${user.getAge()}"></td>
   </tr>
 </table>
-<a href="/crud/new">Add User</a>
+<a href="/security/admin/new">Add User</a>
+<br>
+<p> <a href="/security/logout">Logout</a></p>
 </body>
 </html>
